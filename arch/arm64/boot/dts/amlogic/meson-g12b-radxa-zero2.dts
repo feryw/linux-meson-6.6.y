@@ -54,6 +54,17 @@
 		};
 	};
 
+	cvbs-connector {
+		status = "disabled";
+		compatible = "composite-video-connector";
+
+		port {
+			cvbs_connector_in: endpoint {
+				remote-endpoint = <&cvbs_vdac_out>;
+			};
+		};
+	};
+
 	hdmi-connector {
 		compatible = "hdmi-connector";
 		type = "a";
@@ -77,7 +88,7 @@
 		clock-names = "ext_clock";
 	};
 
-	ao_5v: regulator-ao-5v {
+	ao_5v: regulator-ao_5v {
 		compatible = "regulator-fixed";
 		regulator-name = "AO_5V";
 		regulator-min-microvolt = <5000000>;
@@ -85,7 +96,7 @@
 		regulator-always-on;
 	};
 
-	vcc_1v8: regulator-vcc-1v8 {
+	vcc_1v8: regulator-vcc_1v8 {
 		compatible = "regulator-fixed";
 		regulator-name = "VCC_1V8";
 		regulator-min-microvolt = <1800000>;
@@ -94,7 +105,7 @@
 		regulator-always-on;
 	};
 
-	vcc_3v3: regulator-vcc-3v3 {
+	vcc_3v3: regulator-vcc_3v3 {
 		compatible = "regulator-fixed";
 		regulator-name = "VCC_3V3";
 		regulator-min-microvolt = <3300000>;
@@ -104,7 +115,7 @@
 		/* FIXME: actually controlled by VDDCPU_B_EN */
 	};
 
-	vddao_1v8: regulator-vddao-1v8 {
+	vddao_1v8: regulator-vddao_1v8 {
 		compatible = "regulator-fixed";
 		regulator-name = "VDDIO_AO1V8";
 		regulator-min-microvolt = <1800000>;
@@ -113,7 +124,7 @@
 		regulator-always-on;
 	};
 
-	vddao_3v3: regulator-vddao-3v3 {
+	vddao_3v3: regulator-vddao_3v3 {
 		compatible = "regulator-fixed";
 		regulator-name = "VDDAO_3V3";
 		regulator-min-microvolt = <3300000>;
@@ -121,7 +132,7 @@
 		vin-supply = <&ao_5v>;
 		regulator-always-on;
 	};
-
+	
 	vddcpu_a: regulator-vddcpu-a {
 		/*
 		 * MP8756GD Regulator.
@@ -176,6 +187,7 @@
 		assigned-clock-rates = <294912000>,
 				       <270950400>,
 				       <393216000>;
+		status = "okay";
 
 		dai-link-0 {
 			sound-dai = <&frddr_a>;
@@ -214,7 +226,7 @@
 		};
 	};
 
-	wifi32k: clock-0 {
+	wifi32k: wifi32k {
 		compatible = "pwm-clock";
 		#clock-cells = <0>;
 		clock-frequency = <32768>;
@@ -286,6 +298,12 @@
 	clock-latency = <50000>;
 };
 
+&cvbs_vdac_port {
+	cvbs_vdac_out: endpoint {
+		remote-endpoint = <&cvbs_connector_in>;
+	};
+};
+
 &frddr_a {
 	status = "okay";
 };
@@ -348,6 +366,10 @@
 	pinctrl-names = "default";
 };
 
+&npu {
+	status = "okay";
+};
+
 &pwm_ab {
 	pinctrl-0 = <&pwm_a_e_pins>;
 	pinctrl-names = "default";
@@ -360,15 +382,7 @@
 	pinctrl-0 = <&pwm_e_pins>;
 	pinctrl-names = "default";
 	clocks = <&xtal>;
-	clock-names = "clkin0";
-	status = "okay";
-};
-
-&pwm_AO_ab {
-	pinctrl-0 = <&pwm_ao_a_pins>;
-	pinctrl-names = "default";
-	clocks = <&xtal>;
-	clock-names = "clkin0";
+	clock-names = "clkin2";
 	status = "okay";
 };
 
@@ -376,7 +390,7 @@
 	pinctrl-0 = <&pwm_ao_d_e_pins>;
 	pinctrl-names = "default";
 	clocks = <&xtal>;
-	clock-names = "clkin1";
+	clock-names = "clkin4";
 	status = "okay";
 };
 

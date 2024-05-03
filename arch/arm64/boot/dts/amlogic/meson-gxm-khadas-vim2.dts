@@ -18,6 +18,8 @@
 	aliases {
 		serial0 = &uart_AO;
 		serial2 = &uart_AO_B;
+		rtc0 = &rtc;
+		rtc1 = &vrtc;
 	};
 
 	chosen {
@@ -157,6 +159,7 @@
 		assigned-clock-rates = <294912000>,
 				       <270950400>,
 				       <393216000>;
+		status = "okay";
 
 		dai-link-0 {
 			sound-dai = <&aiu AIU_CPU CPU_I2S_FIFO>;
@@ -270,6 +273,7 @@
 		compatible = "haoyu,hym8563";
 		reg = <0x51>;
 		#clock-cells = <0>;
+		clock-frequency = <32768>;
 		clock-output-names = "xin32k";
 	};
 };

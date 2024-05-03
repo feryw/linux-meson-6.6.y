@@ -88,8 +88,6 @@
 
 		l2: l2-cache0 {
 			compatible = "cache";
-			cache-level = <2>;
-			cache-unified;
 		};
 	};
 
@@ -135,6 +133,16 @@
 		opp-1908000000 {
 			opp-hz = /bits/ 64 <1908000000>;
 			opp-microvolt = <950000>;
+		};
+
+		opp-2016000000 {
+			opp-hz = /bits/ 64 <2016000000>;
+			opp-microvolt = <1000000>;
+		};
+
+		opp-2100000000 {
+			opp-hz = /bits/ 64 <2100000000>;
+			opp-microvolt = <1022000>;
 		};
 	};
 };
@@ -520,10 +528,6 @@
 
 &pcie {
 	power-domains = <&pwrc PWRC_SM1_PCIE_ID>;
-};
-
-&pmu {
-	compatible = "amlogic,sm1-ddr-pmu";
 };
 
 &pwrc {
